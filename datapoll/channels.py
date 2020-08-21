@@ -62,7 +62,8 @@ class ChannelChanger:
                     153: 5765,
                     157: 5785,
                     161: 5805,
-                    165: 5825}
+                    165: 5825
+                    }
 
     def get_50freq(self, channel):
         return self.CHAN_DICT_50[channel]
