@@ -1,4 +1,4 @@
 # Project exclude paths
 /venv/
 .idea
-db.sqlite3
+/wifioccupy/sensative_settings.py
