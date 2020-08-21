@@ -11,9 +11,13 @@ class MACAddressAdmin(admin.ModelAdmin):
 admin.site.register(MACAddress, MACAddressAdmin)
 
 
-class MACAdressInline(admin.TabularInline):
+class MACAddressInline(admin.TabularInline):
     model = MACAddress
 
 
 class WirelessDeviceAdmin(admin.ModelAdmin):
     list_display = ['mac_address', 'ip_address', 'hostname', 'alternative_name']
+    list_editable = ['ip_address', 'hostname', 'alternative_name']
+
+
+admin.site.register(WirelessDevice, WirelessDeviceAdmin)
