@@ -19,10 +19,10 @@ class WirelessDevice(models.Model):
 
 class Router(models.Model):
     identifier = models.CharField(max_length=4, null=False, unique=True)
-    mac_24 = models.ForeignKey(MACAddress, related_name='mac_for_24_ghz', on_delete=models.PROTECT)
-    ip_address_24 = models.CharField(max_length=15)
-    mac_50 = models.ForeignKey(MACAddress, related_name='mac_for_50_ghz', on_delete=models.PROTECT)
-    ip_address_50 = models.CharField(max_length=15)
+    mac_24 = models.ForeignKey(MACAddress, related_name='mac_for_24_ghz', on_delete=models.PROTECT, blank=True, null=True)
+    ip_address_24 = models.CharField(max_length=15, blank=True, null=True)
+    mac_50 = models.ForeignKey(MACAddress, related_name='mac_for_50_ghz', on_delete=models.PROTECT, blank=True, null=True)
+    ip_address_50 = models.CharField(max_length=15, blank=True, null=True)
 
 
 class PacketReceipt(models.Model):

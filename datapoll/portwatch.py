@@ -14,7 +14,7 @@ sys.path.extend([base_dir])
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wifioccupy.settings")
 django.setup()
 
-from datapoll.models import WirelessDevice
+from datapoll.models import WirelessDevice, PacketReceipt, Router, MACAddress
 
 device_list = {}
 UDP_IP = "192.168.1.210"
@@ -40,18 +40,27 @@ while True:
     data = received_bytes.decode("utf-8").rstrip('|').split(',')
     log.debug("received message: %s" % data)
 
-    source_lap = data[0]
-    mac = data[1]
-    timestamp = datetime.now()
+    mac = MACAddress.objects.get(mac_address=data[1])
+    rss = data[2]
 
-    if mac in unique_list:
-        unique_list[mac] = [unique_list[mac][0] + 1, timestamp, source_lap]
-    else:
-        unique_list.update({mac: [1, timestamp, source_lap]})
-    log.info('--------------------------------')
 
-    for x in unique_list:
-        if x in device_list:
-            string = str(device_list[x])
-            log.info(string + ' ' + str(unique_list[x][0]) + ' ' + unique_list[x][2] + ' ' + unique_list[x][1].strftime(
-                "%m/%d/%Y, %H:%M:%S"))
+    rt = Router.objects.get(identifier=data[0])
+
+
+    pr = PacketReceipt(mac_address=mac, router=rt, rss=rss)
+
+    pr.save()
+
+
+    #
+    # if mac in unique_list:
+    #     unique_list[mac] = [unique_list[mac][0] + 1, timestamp, source_lap]
+    # else:
+    #     unique_list.update({mac: [1, timestamp, source_lap]})
+    # log.info('--------------------------------')
+    #
+    # for x in unique_list:
+    #     if x in device_list:
+    #         string = str(device_list[x])
+    #         log.info(string + ' Count: ' + str(unique_list[x][0]) + ' Source Router:' + unique_list[x][2] + ' ' + unique_list[x][1].strftime(
+    #             "%m/%d/%Y, %H:%M:%S"))
