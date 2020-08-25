@@ -41,7 +41,7 @@ while True:
     log.debug("received message: %s" % data)
 
     mac, created = MACAddress.objects.get_or_create(mac_address=data[1])
-    if  mac.do_not_log:
+    if mac.do_not_log:
         pass
     else:
         rss = data[2]

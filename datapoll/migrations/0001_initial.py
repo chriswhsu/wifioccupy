@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             name='PacketReceipt',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
+                ('packet_datetime', models.DateTimeField(auto_now_add=True)),
                 ('rss', models.SmallIntegerField()),
                 ('mac_address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='datapoll.macaddress')),
                 ('router', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='datapoll.router')),
