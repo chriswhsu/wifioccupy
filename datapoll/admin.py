@@ -5,7 +5,8 @@ from datapoll.models import *
 # Register your models here.
 
 class MACAddressAdmin(admin.ModelAdmin):
-    list_display = ['mac_address']
+    list_display = ['id', 'mac_address', 'do_not_log']
+    list_editable = ['do_not_log']
 
 
 admin.site.register(MACAddress, MACAddressAdmin)
@@ -29,3 +30,11 @@ class RouterAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Router, RouterAdmin)
+
+
+class ChannelAdmin(admin.ModelAdmin):
+    list_display = ['spectrum', 'channel_number', 'frequency', 'monitor']
+    list_editable = ['monitor']
+
+
+admin.site.register(Channel, ChannelAdmin)

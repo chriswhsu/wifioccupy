@@ -5,6 +5,7 @@ from django.db import models
 
 class MACAddress(models.Model):
     mac_address = models.CharField(max_length=17, unique=True, null=False)
+    do_not_log = models.BooleanField(default=0)
 
     def __str__(self):
         return self.mac_address
@@ -30,3 +31,16 @@ class PacketReceipt(models.Model):
     mac_address = models.ForeignKey(MACAddress, on_delete=models.PROTECT)
     router = models.ForeignKey(Router, on_delete=models.PROTECT)
     rss = models.SmallIntegerField()
+
+
+class Channel(models.Model):
+    channel_number = models.SmallIntegerField(primary_key=True)
+
+    SPECTRA = ((50, "5 GHz"),
+               (24, "2.4 GHz"))
+
+    spectrum = models.SmallIntegerField(choices=SPECTRA)
+    frequency = models.SmallIntegerField()
+    monitor = models.BooleanField(default=0)
+
+

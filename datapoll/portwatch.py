@@ -41,10 +41,13 @@ while True:
     log.debug("received message: %s" % data)
 
     mac, created = MACAddress.objects.get_or_create(mac_address=data[1])
-    rss = data[2]
+    if  mac.do_not_log:
+        pass
+    else:
+        rss = data[2]
 
-    rt = Router.objects.get(identifier=data[0])
+        rt = Router.objects.get(identifier=data[0])
 
-    pr = PacketReceipt(mac_address=mac, router=rt, rss=rss)
+        pr = PacketReceipt(mac_address=mac, router=rt, rss=rss)
 
-    pr.save()
+        pr.save()
