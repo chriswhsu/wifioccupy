@@ -40,27 +40,11 @@ while True:
     data = received_bytes.decode("utf-8").rstrip('|').split(',')
     log.debug("received message: %s" % data)
 
-    mac = MACAddress.objects.get(mac_address=data[1])
+    mac, created = MACAddress.objects.get_or_create(mac_address=data[1])
     rss = data[2]
 
-
     rt = Router.objects.get(identifier=data[0])
-
 
     pr = PacketReceipt(mac_address=mac, router=rt, rss=rss)
 
     pr.save()
-
-
-    #
-    # if mac in unique_list:
-    #     unique_list[mac] = [unique_list[mac][0] + 1, timestamp, source_lap]
-    # else:
-    #     unique_list.update({mac: [1, timestamp, source_lap]})
-    # log.info('--------------------------------')
-    #
-    # for x in unique_list:
-    #     if x in device_list:
-    #         string = str(device_list[x])
-    #         log.info(string + ' Count: ' + str(unique_list[x][0]) + ' Source Router:' + unique_list[x][2] + ' ' + unique_list[x][1].strftime(
-    #             "%m/%d/%Y, %H:%M:%S"))
