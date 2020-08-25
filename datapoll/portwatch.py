@@ -7,7 +7,6 @@ import datapoll.django_prep as ddp
 
 from datapoll.models import WirelessDevice, PacketReceipt, Router, MACAddress
 
-device_list = {}
 UDP_IP = ddp.settings.LISTEN_UDP_IP
 UDP_PORT = ddp.settings.LISTEN_UDP_PORT
 
@@ -18,11 +17,14 @@ log = lgg.getLogger(__name__)
 
 devices = WirelessDevice.objects.all()
 
+device_list = {}
+
 for x in devices:
     device_list[x.mac_address.mac_address] = x.alternative_name
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # INTERNET  UDP
 sock.bind((UDP_IP, UDP_PORT))
+
 unique_list = {}
 
 while True:

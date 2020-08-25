@@ -39,6 +39,7 @@ class PacketReceipt(models.Model):
         managed = False
 
 
+
 class Channel(models.Model):
     channel_number = models.SmallIntegerField(primary_key=True)
 
