@@ -12,7 +12,17 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import wifioccupy.sensative_settings as ss
 
+# Custom Application Specific Settings
+MASTER_AP_IP_ADDRESS = "192.168.1.200"
+SSH_PORT = 22
+
+LISTEN_UDP_IP = "192.168.1.210"
+LISTEN_UDP_PORT = 5003
+
+MASTER_AP_USERNAME = ss.MASTER_AP_USERNAME
+MASTER_AP_PASSWORD = ss.MASTER_AP_PASSWORD
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -75,8 +85,7 @@ WSGI_APPLICATION = 'wifioccupy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-from wifioccupy.sensative_settings import THE_DATABASES
-DATABASES = THE_DATABASES
+DATABASES = ss.DATABASES
 
 
 # Password validation

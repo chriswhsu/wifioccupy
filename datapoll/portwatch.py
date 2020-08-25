@@ -1,24 +1,15 @@
 import socket
-from datetime import datetime
 import logging as lgg
-import django
-from django.conf import settings
+import hashlib
 
-import sys
-import os
+import datapoll.django_prep as ddp
 
-cur_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)))
-base_dir = os.path.join(cur_dir, '..')
-sys.path.extend([base_dir])
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wifioccupy.settings")
-django.setup()
 
 from datapoll.models import WirelessDevice, PacketReceipt, Router, MACAddress
 
 device_list = {}
-UDP_IP = "192.168.1.210"
-UDP_PORT = 5003
+UDP_IP = ddp.settings.LISTEN_UDP_IP
+UDP_PORT = ddp.settings.LISTEN_UDP_PORT
 
 lgg.basicConfig(level=lgg.INFO, format='%(asctime)s %(levelname)s %(message)s')
 
@@ -40,7 +31,13 @@ while True:
     data = received_bytes.decode("utf-8").rstrip('|').split(',')
     log.debug("received message: %s" % data)
 
-    mac, created = MACAddress.objects.get_or_create(mac_address=data[1])
+    hexhash = hashlib.sha256(data[1].encode('utf-8')).hexdigest()
+
+    mac, created = MACAddress.objects.get_or_create(mac_address_hash=hexhash,
+                                                    mac_address=data[1])
+    if created:
+        lgg.info("Haven't see this mac address before, it's hash is {0}".format(hexhash))
+
     if mac.do_not_log:
         pass
     else:

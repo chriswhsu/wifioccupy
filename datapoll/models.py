@@ -4,7 +4,8 @@ from django.db import models
 # Create your models here.
 
 class MACAddress(models.Model):
-    mac_address = models.CharField(max_length=17, unique=True, null=False)
+    mac_address = models.CharField(max_length=17, unique=True, null=True, blank=True)
+    mac_address_hash = models.CharField(max_length=64, unique=True, null=False)
     do_not_log = models.BooleanField(default=0)
 
     def __str__(self):

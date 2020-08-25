@@ -5,7 +5,7 @@ from datapoll.models import *
 # Register your models here.
 
 class MACAddressAdmin(admin.ModelAdmin):
-    list_display = ['id', 'mac_address', 'do_not_log']
+    list_display = ['id', 'mac_address_hash', 'do_not_log']
     list_editable = ['do_not_log']
 
 

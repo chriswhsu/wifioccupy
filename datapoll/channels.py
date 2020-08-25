@@ -1,6 +1,9 @@
 import paramiko
 import logging as lgg
 import time
+import datapoll.django_prep as ddp
+
+from datapoll.models import Channel
 
 lgg.basicConfig(level=lgg.INFO, format='%(asctime)s %(levelname)s %(message)s')
 
@@ -9,10 +12,10 @@ log = lgg.getLogger(__name__)
 
 
 class Connection:
-    host = "192.168.1.200"
-    port = 22
-    username = "root"
-    password = "wifi"
+    host = ddp.settings.MASTER_AP_IP_ADDRESS
+    port = ddp.settings.SSH_PORT
+    username = ddp.settings.MASTER_AP_USERNAME
+    password = ddp.settings.MASTER_AP_PASSWORD
 
     def make_connection(self):
         client = paramiko.SSHClient()
@@ -92,7 +95,7 @@ class ChannelChanger:
             lines = stdout.readlines()
             log.info(lines)
         except Exception as e:
-            log.warning('Failure diuring change_channel: {0}'.format(e))
+            log.warning('Failure during change_channel: {0}'.format(e))
 
     def rotate50_channels(self, wait):
         while True:
