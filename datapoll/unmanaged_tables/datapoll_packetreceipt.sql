@@ -5,7 +5,7 @@ CREATE TABLE `datapoll_packetreceipt` (
   `router_id` int NOT NULL,
   PRIMARY KEY (`packet_datetime`,`mac_address_id`,`router_id`),
   KEY `idx_datapoll_packetreceipt_mac_address_id` (`mac_address_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB
 /*!50100 PARTITION BY RANGE (to_days(`packet_datetime`))
 (PARTITION p20200819 VALUES LESS THAN (738022) ENGINE = InnoDB,
  PARTITION p20200820 VALUES LESS THAN (738023) ENGINE = InnoDB,

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import wifioccupy.sensative_settings as ss
+import wifioccupy.sensitive_settings as ss
 
 # Custom Application Specific Settings
 MASTER_AP_IP_ADDRESS = "192.168.1.200"
