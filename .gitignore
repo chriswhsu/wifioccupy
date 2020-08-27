@@ -1,4 +1,4 @@
 # Project exclude paths
 /venv/
 .idea
-/wifioccupy/sensative_settings.py
+/wifioccupy/sensitive_settings.py
